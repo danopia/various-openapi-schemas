@@ -1,0 +1,219 @@
+openapi: 3.0.1
+info:
+  title: World Time API
+  version: '20210108-multicontent'
+  description: A simple API to get the current time based on a request with a timezone.
+servers:
+  - url: https://worldtimeapi.org/api/
+paths:
+  /timezone:
+    get:
+      responses:
+        default:
+          $ref: '#/components/responses/SuccessfulListResponse'
+      summary: a listing of all timezones.
+  /timezone/{area}:
+    get:
+      parameters:
+        - name: area
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessfulListResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      summary: a listing of all timezones available for that area.
+  /timezone/{area}/{location}:
+    get:
+      parameters:
+        - name: area
+          schema:
+            type: string
+          in: path
+          required: true
+        - name: location
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessfulDateTimeResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      summary: request the current time for a timezone.
+  /timezone/{area}/{location}/{region}:
+    get:
+      parameters:
+        - name: area
+          schema:
+            type: string
+          in: path
+          required: true
+        - name: location
+          schema:
+            type: string
+          in: path
+          required: true
+        - name: region
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessfulDateTimeResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      summary: request the current time for a timezone.
+  /ip:
+    get:
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessfulDateTimeResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      summary: >-
+        request the current time based on the ip of the request. note: this is a
+        "best guess" obtained from open-source data.
+  /ip/{ipv4}:
+    get:
+      parameters:
+        - name: ipv4
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessfulDateTimeResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      summary: >-
+        request the current time based on the ip of the request. note: this is a
+        "best guess" obtained from open-source data.
+components:
+  responses:
+    ErrorResponse:
+      description: an error response in JSON or plaintext format
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorJsonResponse'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ErrorTextResponse'
+    SuccessfulListResponse:
+      description: the list of available timezones in JSON or plaintext format
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ListJsonResponse'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/ListTextResponse'
+    SuccessfulDateTimeResponse:
+      description: the current time for the timezone requested in JSON or plaintext format
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DateTimeJsonResponse'
+        text/plain:
+          schema:
+            $ref: '#/components/schemas/DateTimeTextResponse'
+  schemas:
+    ListJsonResponse:
+      description: a list of available timezones
+      type: array
+      items:
+        type: string
+    ListTextResponse:
+      description: a list of available timezones, one per line
+      type: string
+    DateTimeJsonResponse:
+      required:
+        - abbreviation
+        - client_ip
+        - datetime
+        - day_of_week
+        - day_of_year
+        - dst
+        - dst_offset
+        - timezone
+        - unixtime
+        - utc_datetime
+        - utc_offset
+        - week_number
+      properties:
+        abbreviation:
+          description: the abbreviated name of the timezone
+          type: string
+        client_ip:
+          description: the IP of the client making the request
+          type: string
+        datetime:
+          description: an ISO8601-valid string representing the current, local date/time
+          type: string
+        day_of_week:
+          description: current day number of the week, where sunday is 0
+          type: integer
+        day_of_year:
+          description: ordinal date of the current year
+          type: integer
+        dst:
+          description: flag indicating whether the local time is in daylight savings
+          type: boolean
+        dst_from:
+          description: >-
+            an ISO8601-valid string representing the datetime when daylight
+            savings started for this timezone
+          type: string
+        dst_offset:
+          description: >-
+            the difference in seconds between the current local time and
+            daylight saving time for the location
+          type: integer
+        dst_until:
+          description: >-
+            an ISO8601-valid string representing the datetime when daylight
+            savings will end for this timezone
+          type: string
+        raw_offset:
+          description: >-
+            the difference in seconds between the current local time and the
+            time in UTC, excluding any daylight saving difference (see
+            dst_offset)
+          type: integer
+        timezone:
+          description: timezone in `Area/Location` or `Area/Location/Region` format
+          type: string
+        unixtime:
+          description: number of seconds since the Epoch
+          type: integer
+        utc_datetime:
+          description: an ISO8601-valid string representing the current date/time in UTC
+          type: string
+        utc_offset:
+          description: an ISO8601-valid string representing the offset from UTC
+          type: string
+        week_number:
+          description: the current week number
+          type: integer
+    DateTimeTextResponse:
+      description: >-
+        time zone details, as per the DateTimeJsonResponse response, in the
+        format `key: value`, one item per line
+      type: string
+    ErrorJsonResponse:
+      required:
+        - error
+      properties:
+        error:
+          description: details about the error encountered
+          type: string
+    ErrorTextResponse:
+      description: details about the error encountered in plain text
+      type: string
