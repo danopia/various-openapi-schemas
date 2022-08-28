@@ -1,0 +1,149 @@
+openapi: 3.0.1
+info:
+  title: Google Public DNS Resolver
+  version: 2022-08-28
+  description: Privately query secured DNS records from Google's closest server
+servers:
+  - url: https://8.8.8.8
+  - url: https://dns.google
+paths:
+  /resolve:
+    get:
+      parameters:
+      - in: query
+        name: name
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: type
+        schema:
+          type: string
+        required: false
+      - in: query
+        name: cd
+        schema:
+          type: string
+        required: false
+      - in: query
+        name: ct
+        schema:
+          type: string
+        required: false
+      - in: query
+        name: do
+        schema:
+          type: string
+        required: false
+      - in: query
+        name: edns_client_subnet
+        schema:
+          type: string
+        required: false
+      - in: query
+        name: random_padding
+        schema:
+          type: string
+        required: false
+      responses:
+        default:
+          $ref: '#/components/responses/DnsResponse'
+components:
+  responses:
+    DnsResponse:
+      description: A DNS response.
+      content:
+        application/x-javascript:
+          schema:
+            $ref: '#/components/schemas/DnsJsonResponse'
+  schemas:
+    DnsJsonResponse:
+      required:
+      - Status
+      - TC
+      - RD
+      - RA
+      - AD
+      - CD
+      - Question
+      properties:
+        Status:
+          description: Standard DNS response code (32 bit integer)
+          type: integer
+        TC:
+          description: Whether the response is truncated
+          type: boolean
+        RD:
+          description: Always true for Google Public DNS
+          type: boolean
+        RA:
+          description: Always true for Google Public DNS
+          type: boolean
+        AD:
+          description: Whether all response data was validated with DNSSEC
+          type: boolean
+        CD:
+          description: Whether the client asked to disable DNSSEC
+          type: boolean
+        Question:
+          type: array
+          items:
+            type: object
+            required:
+            - name
+            - type
+            properties:
+              name:
+                description: FQDN with trailing dot
+                type: string
+              type:
+                description: Standard DNS RR type
+                type: integer
+        Answer:
+          type: array
+          items:
+            type: object
+            required:
+            - name
+            - type
+            - data
+            properties:
+              name:
+                description: Always matches name in the Question section
+                type: string
+              type:
+                description: Standard DNS RR type
+                type: integer
+              TTL:
+                description: Record's time-to-live in seconds
+                type: integer
+              data:
+                description: Data for A - IP address as text
+                type: string
+        Authority:
+          type: array
+          items:
+            type: object
+            required:
+            - name
+            - type
+            - data
+            properties:
+              name:
+                description: Always matches name in the Question section
+                type: string
+              type:
+                description: Standard DNS RR type
+                type: integer
+              TTL:
+                description: Record's time-to-live in seconds
+                type: integer
+              data:
+                description: Data for A - IP address as text
+                type: string
+        Comment:
+          description: Any diagnostic information
+          type: string
+        edns_client_subnet:
+          description: IP address / scope prefix-length
+          type: string
