@@ -42,7 +42,7 @@ paths:
     get:
       tags:
       - browser
-    summary: Show the user agent that your client is sending
+      summary: Show the user agent that your client is sending
       operationId: getUserAgent
       responses:
         '200':
