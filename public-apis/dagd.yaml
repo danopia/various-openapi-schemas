@@ -1,0 +1,262 @@
+openapi: 3.0.3
+info:
+  title: da.gd API
+  version: '0.1'
+  x-logo:
+    url: ''
+servers:
+  - url: https://da.gd
+    description: ''
+    x-last-modified: 1661805997817
+  - url: https://ipv4.da.gd
+    description: ''
+    x-last-modified: 1661806005738
+  - url: https://ipv6.da.gd
+    description: ''
+    x-last-modified: 1661806011271
+paths:
+  /help:
+    summary: Provides a list of valid commands based on the route map.
+    description: ''
+    get:
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/TextualResponse'
+          x-last-modified: 1661806080718
+      operationId: getHelp
+      summary: Provide an overall list of commands
+    x-last-modified: 1661806053657
+  /newhelp:
+    summary: Provides a list of valid commands and examples of how to use them
+    get:
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/TextualResponse'
+          x-last-modified: 1661806143809
+      operationId: getNewHelp
+    x-last-modified: 1661806131733
+  /ua:
+    summary: Show the user agent that your client is sending
+    get:
+      tags: []
+      operationId: getUserAgent
+      responses:
+        '200':
+          $ref: '#/components/responses/TextualResponse'
+          x-last-modified: 1661806303229
+    x-last-modified: 1661806179079
+  /ip:
+    summary: Returns your current IP address
+    get:
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/TextualResponse'
+          x-last-modified: 1661806294746
+      operationId: getIpAddress
+    x-last-modified: 1661806195158
+  /w:
+    summary: Whois your current IP address
+    get:
+      tags: []
+      operationId: getMyWhois
+      responses:
+        '200':
+          $ref: '#/components/responses/TextualResponse'
+          x-last-modified: 1661806367426
+    x-last-modified: 1661806356865
+  /w/{query}:
+    summary: Whois a given domain or IP address
+    get:
+      tags: []
+      parameters:
+        - name: query
+          in: path
+          required: true
+          deprecated: false
+          example: google.com
+          schema:
+            type: string
+          x-last-modified: 1661806427652
+      operationId: getWhois
+      responses:
+        '200':
+          $ref: '#/components/responses/TextualResponse'
+          x-last-modified: 1661806501796
+    x-last-modified: 1661806384787
+  /ec/{username}:
+    summary: Gives wikipedia edit count for a user
+    get:
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/TextualResponse'
+          x-last-modified: 1661806514632
+      operationId: getEditCount
+      parameters:
+        - in: path
+          required: true
+          deprecated: false
+          schema:
+            type: string
+          name: username
+          x-last-modified: 1661806542240
+        - name: lang
+          in: query
+          required: false
+          deprecated: false
+          example: fr
+          schema:
+            type: string
+          allowEmptyValue: false
+          x-last-modified: 1661806585834
+        - name: proj
+          in: query
+          required: false
+          deprecated: false
+          example: wikiquote
+          schema:
+            type: integer
+          allowEmptyValue: false
+          x-last-modified: 1661806624186
+    x-last-modified: 1661806491418
+  /host/{address}:
+    summary: Return the IP or hostname of the given value
+    get:
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/TextualResponse'
+          x-last-modified: 1661806754018
+      parameters:
+        - name: address
+          in: path
+          required: true
+          deprecated: false
+          schema:
+            type: string
+          x-last-modified: 1661806778108
+      operationId: getHost
+    x-last-modified: 1661806737183
+  /isp:
+    summary: Returns the name of your ISP
+    get:
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/TextualResponse'
+          x-last-modified: 1661806754018
+      operationId: getMyIsp
+    x-last-modified: 1661806977968
+  /isp/{ip}:
+    summary: Returns the name of the ISP of the given IP
+    get:
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/TextualResponse'
+          x-last-modified: 1661806754018
+      parameters:
+        - name: ip
+          in: path
+          required: true
+          deprecated: false
+          schema:
+            type: string
+          x-last-modified: 1661806778108
+      operationId: getIsp
+    x-last-modified: 1661807005699
+  /dns/{hostname}:
+    summary: Fetch and return all DNS records for a given hostname
+    get:
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/TextualResponse'
+          x-last-modified: 1661806754018
+      parameters:
+        - name: hostname
+          in: path
+          required: true
+          deprecated: false
+          schema:
+            type: string
+          x-last-modified: 1661806778108
+      operationId: getIsp
+    x-last-modified: 1661807005699
+  /cow:
+    summary: Generate cows and other cow-like things
+    get:
+      tags: []
+      responses:
+        '200':
+          $ref: '#/components/responses/TextualResponse'
+          x-last-modified: 1661806514632
+      operationId: getCow
+      parameters:
+        - name: text
+          in: query
+          required: false
+          deprecated: false
+          example: moo
+          schema:
+            type: string
+          allowEmptyValue: false
+          x-last-modified: 1661806585834
+        - name: say
+          in: query
+          required: false
+          deprecated: false
+          example: moo
+          schema:
+            type: string
+        - name: cow
+          in: query
+          required: false
+          deprecated: false
+          example: moose
+          schema:
+            type: string
+          allowEmptyValue: false
+          x-last-modified: 1661806624186
+        - name: eyes
+          in: query
+          required: false
+          deprecated: false
+          example: @@
+          schema:
+            type: string
+        - name: thoughts
+          in: query
+          required: false
+          deprecated: false
+          example: ^
+          schema:
+            type: string
+        - name: tongue
+          in: query
+          required: false
+          deprecated: false
+          example: ~
+          schema:
+            type: string
+    x-last-modified: 1661806491418
+components:
+  responses:
+    TextualResponse:
+      content:
+        text/plain:
+          schema:
+            type: string
+        text/html:
+          schema:
+            type: string
+      x-last-modified: 1661792395470
+  securitySchemes: {}
+  schemas: {}
+  headers: {}
+  parameters: {}
+tags: []
+security: []
