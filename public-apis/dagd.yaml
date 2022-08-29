@@ -16,41 +16,55 @@ servers:
     x-last-modified: 1661806011271
 paths:
   /help:
-    summary: Provides a list of valid commands based on the route map.
     description: ''
     get:
-      tags: []
+      tags:
+      - help
       responses:
         '200':
           $ref: '#/components/responses/TextualResponse'
           x-last-modified: 1661806080718
       operationId: getHelp
-      summary: Provide an overall list of commands
+      summary: Provides a list of valid commands based on the route map.
     x-last-modified: 1661806053657
   /newhelp:
-    summary: Provides a list of valid commands and examples of how to use them
     get:
-      tags: []
+      tags:
+      - help
       responses:
         '200':
           $ref: '#/components/responses/TextualResponse'
           x-last-modified: 1661806143809
       operationId: getNewHelp
+      summary: Provides a list of valid commands and examples of how to use them
     x-last-modified: 1661806131733
   /ua:
-    summary: Show the user agent that your client is sending
     get:
-      tags: []
+      tags:
+      - browser
+    summary: Show the user agent that your client is sending
       operationId: getUserAgent
       responses:
         '200':
           $ref: '#/components/responses/TextualResponse'
           x-last-modified: 1661806303229
     x-last-modified: 1661806179079
-  /ip:
-    summary: Returns your current IP address
+  /headers:
     get:
-      tags: []
+      tags:
+      - browser
+      summary: Show HTTP headers your browser is sending in its request
+      operationId: getRequestHeaders
+      responses:
+        '200':
+          $ref: '#/components/responses/TextualResponse'
+          x-last-modified: 1661806303229
+    x-last-modified: 1661806179079
+  /ip:
+    get:
+      tags:
+      - browser
+      summary: Returns your current IP address
       responses:
         '200':
           $ref: '#/components/responses/TextualResponse'
@@ -58,9 +72,10 @@ paths:
       operationId: getIpAddress
     x-last-modified: 1661806195158
   /w:
-    summary: Whois your current IP address
     get:
-      tags: []
+      tags:
+      - whois
+      summary: Whois your current IP address
       operationId: getMyWhois
       responses:
         '200':
@@ -68,9 +83,10 @@ paths:
           x-last-modified: 1661806367426
     x-last-modified: 1661806356865
   /w/{query}:
-    summary: Whois a given domain or IP address
     get:
-      tags: []
+      tags:
+      - whois
+      summary: Whois a given domain or IP address
       parameters:
         - name: query
           in: path
@@ -87,14 +103,15 @@ paths:
           x-last-modified: 1661806501796
     x-last-modified: 1661806384787
   /ec/{username}:
-    summary: Gives wikipedia edit count for a user
     get:
-      tags: []
+      tags:
+      - lookup
       responses:
         '200':
           $ref: '#/components/responses/TextualResponse'
           x-last-modified: 1661806514632
       operationId: getEditCount
+      summary: Gives wikipedia edit count for a user
       parameters:
         - in: path
           required: true
@@ -123,9 +140,10 @@ paths:
           x-last-modified: 1661806624186
     x-last-modified: 1661806491418
   /host/{address}:
-    summary: Return the IP or hostname of the given value
     get:
-      tags: []
+      tags:
+      - dns
+      summary: Return the IP or hostname of the given value
       responses:
         '200':
           $ref: '#/components/responses/TextualResponse'
@@ -141,19 +159,20 @@ paths:
       operationId: getHost
     x-last-modified: 1661806737183
   /isp:
-    summary: Returns the name of your ISP
     get:
-      tags: []
+      tags:
+      - whois
       responses:
         '200':
           $ref: '#/components/responses/TextualResponse'
           x-last-modified: 1661806754018
+      summary: Returns the name of your ISP
       operationId: getMyIsp
     x-last-modified: 1661806977968
   /isp/{ip}:
-    summary: Returns the name of the ISP of the given IP
     get:
-      tags: []
+      tags:
+      - whois
       responses:
         '200':
           $ref: '#/components/responses/TextualResponse'
@@ -166,12 +185,14 @@ paths:
           schema:
             type: string
           x-last-modified: 1661806778108
+      summary: Returns the name of the ISP of the given IP
       operationId: getIsp
     x-last-modified: 1661807005699
   /dns/{hostname}:
-    summary: Fetch and return all DNS records for a given hostname
     get:
-      tags: []
+      tags:
+      - dns
+      summary: Fetch and return all DNS records for a given hostname
       responses:
         '200':
           $ref: '#/components/responses/TextualResponse'
@@ -184,12 +205,13 @@ paths:
           schema:
             type: string
           x-last-modified: 1661806778108
-      operationId: getIsp
+      operationId: getDns
     x-last-modified: 1661807005699
   /cow:
-    summary: Generate cows and other cow-like things
     get:
-      tags: []
+      tags:
+      - fun
+      summary: Generate cows and other cow-like things
       responses:
         '200':
           $ref: '#/components/responses/TextualResponse'
