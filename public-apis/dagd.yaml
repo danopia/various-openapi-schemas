@@ -124,7 +124,7 @@ paths:
           in: query
           required: false
           deprecated: false
-          example: fr
+          example: en
           schema:
             type: string
           allowEmptyValue: false
@@ -133,9 +133,9 @@ paths:
           in: query
           required: false
           deprecated: false
-          example: wikiquote
+          example: wikipedia
           schema:
-            type: integer
+            type: string
           allowEmptyValue: false
           x-last-modified: 1661806624186
     x-last-modified: 1661806491418
@@ -261,7 +261,7 @@ paths:
           in: query
           required: false
           deprecated: false
-          example: ~
+          example: '~'
           schema:
             type: string
     x-last-modified: 1661806491418
