@@ -225,7 +225,7 @@ paths:
           in: query
           required: false
           deprecated: false
-          example: @@
+          example: '@@'
           schema:
             type: string
         - name: thoughts
