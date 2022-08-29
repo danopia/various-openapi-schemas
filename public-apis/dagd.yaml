@@ -2,21 +2,15 @@ openapi: 3.0.3
 info:
   title: da.gd API
   version: '0.1'
-  x-logo:
-    url: ''
 servers:
   - url: https://da.gd
-    description: ''
-    x-last-modified: 1661805997817
+    description: 'Primary server, with dual-stack networking.'
   - url: https://ipv4.da.gd
-    description: ''
-    x-last-modified: 1661806005738
+    description: 'IPv4-only endpoint, forcing all requests to IPv4'
   - url: https://ipv6.da.gd
-    description: ''
-    x-last-modified: 1661806011271
+    description: 'IPv6-only endpoint, forcing all requests to IPv6'
 paths:
   /help:
-    description: ''
     get:
       tags:
       - help
@@ -268,6 +262,7 @@ paths:
 components:
   responses:
     TextualResponse:
+      description: Contains partially structured text from the application.
       content:
         text/plain:
           schema:
@@ -275,10 +270,4 @@ components:
         text/html:
           schema:
             type: string
-      x-last-modified: 1661792395470
-  securitySchemes: {}
-  schemas: {}
-  headers: {}
-  parameters: {}
 tags: []
-security: []
