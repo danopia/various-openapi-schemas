@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: Notion API
+  version: '1.0'
+  x-logo:
+    url: ''
+  description: ''
+servers:
+  - url: https://api.notion.com
+    description: ''
+    variables: {}
+    x-last-modified: 1661809280157
+paths:
+  /v1/users/me:
+    summary: Retrieve your token's bot user
+    get:
+      tags:
+        - Users
+      summary: Retrieve your token's bot user
+      operationId: getMyUser
+      parameters:
+        - $ref: '#/components/parameters/NotionVersion'
+          name: Notion-Version
+          x-last-modified: 1661809636765
+      externalDocs:
+        url: ''
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                required:
+                - object
+                enum: null
+                description: ''
+                example: ''
+                externalDocs:
+                  url: ''
+                  description: ''
+              encoding: ''
+              example: ''
+          x-last-modified: 1661809766467
+          description: ''
+          headers: {}
+          links: {}
+    x-last-modified: 1661809433978
+components:
+  securitySchemes:
+    PublicOAuthIntegration:
+      type: oauth2
+      description: >-
+        Login flow docs:
+        https://developers.notion.com/docs/authorization#authorizing-public-integrations
+      x-last-modified: 1661809957650
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.notion.com/v1/oauth/authorize
+          tokenUrl: https://api.notion.com/v1/oauth/token
+          refreshUrl: ''
+          scopes: {}
+    InternalIntegrationToken:
+      type: http
+      description: A static token which is only able to access one workspace.
+      scheme: bearer
+      x-last-modified: 1661809964792
+      bearerFormat: ''
+  schemas: {}
+  headers: {}
+  parameters:
+    NotionVersion:
+      name: Notion-Version
+      in: header
+      required: true
+      deprecated: false
+      example: '2022-06-28'
+      schema:
+        type: string
+      x-last-modified: 1661809599732
+tags:
+  - name: Users
+    x-last-modified: 1661809422997
+    externalDocs:
+      url: ''
+security:
+  - InternalIntegrationToken: []
+  - PublicOAuthIntegration: []
+externalDocs:
+  url: https://developers.notion.com/reference/intro
